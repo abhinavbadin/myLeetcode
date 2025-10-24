@@ -1,16 +1,13 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        prev, prev2 = nums[0], 0 
+        dp = [-1] * len(nums)
+        dp[0] = nums[0]
 
         for i in range(1,len(nums)):
             take = nums[i]
             if i > 1:
-                take += prev2
-            notake = 0 + prev
-
-            curr = max(take,notake)
-            
-            prev2 = prev
-            prev = curr
+                take += dp[i-2]
+            notake = 0 + dp[i-1]
+            dp[i] = max(take,notake)
         
-        return prev
+        return dp[len(nums)-1]
